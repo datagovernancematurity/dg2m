@@ -1,5 +1,6 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import './App.css'
+import { useLanguage } from './contexts/LanguageContext'
 
 import Main from './pages/Main'
 import Level from './pages/Level'
@@ -13,18 +14,29 @@ import Infrastructure from './pages/Infrastructure'
 import Open from './pages/Open'
 
 export default function App() {
+  const { t, language, setLanguage } = useLanguage();
+
   return (
     <div className="App">
       <header>
         <nav className="navbar">
-          <h1>Framework DG2M</h1>
+          <h1>{t('nav.title')}</h1>
           <input type="checkbox" id="menu-toggle" />
           <label htmlFor="menu-toggle" className="menu-icon">&#9776;</label>
           <ul className="nav-links">
-            <li><Link to="/">Sobre</Link></li>
-            <li><Link to="/level">Níveis</Link></li>
-            <li><Link to="/dimensions">Dimensões</Link></li>
-            <li><Link to="/roles">Papéis</Link></li>
+            <li><Link to="/">{t('nav.about')}</Link></li>
+            <li><Link to="/level">{t('nav.levels')}</Link></li>
+            <li><Link to="/dimensions">{t('nav.dimensions')}</Link></li>
+            <li><Link to="/roles">{t('nav.roles')}</Link></li>
+            <li>
+              <button
+                onClick={() => setLanguage(language === 'pt-BR' ? 'en' : 'pt-BR')}
+                className="language-toggle"
+                aria-label="Toggle language"
+              >
+                {language === 'pt-BR' ? '🇺🇸 EN' : '🇧🇷 PT'}
+              </button>
+            </li>
           </ul>
         </nav>
       </header>
@@ -46,7 +58,7 @@ export default function App() {
 
       <footer className="main-footer">
         <p className='footer-text'>
-          DG2M
+          {t('footer.copyright')}
         </p>
       </footer>
     </div>
